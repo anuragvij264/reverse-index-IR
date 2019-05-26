@@ -13,26 +13,7 @@ class Index(object):
             self.docs[docid] = tokens
 
         self.counts_dictionary = self.create_count_dict(self.docs)
-
         self.index  = self.create_index(self.docs,self.counts_dictionary)
-
-
-
-    def _put():
-        pass
-
-    def _get():
-        pass
-
-    def _delete():
-        pass
-
-    def _insert():
-        pass
-
-    def insert():
-        pass
-
 
     def gentoken2idx(docs):
         idx2token = dict()
@@ -74,6 +55,16 @@ class Index(object):
         """
         return count_dict[docid][token]
 
+    def update_count_dict(self,count_dict,document):
+        docid = document[docid]
+        new_count_dict = count_dict.update({docid:dict(Counter(document))})
+        return new_count_dict
+
+    def update_index(self,document):
+        new_count_dict = self.update_count_dict(self.count_dict,document)
+        new_index = self.create_index(self.docs.append(document),new_count_dict)
+        return new_index
+
     def get_index(self):
         return self.index
 
@@ -81,14 +72,7 @@ class Index(object):
 if __name__=='__main__':
     """
 
-
-    1 -->  ['I','live','in','gurgaon']
-    2 -->  ['I','work','at','uhg']
-    3 --> ['I','am','happy']
-
-
-
     """
 
-    object_1 =  Index(doc_tokens=[['I','live','in','gurgaon'],['I','work','at','uhg'],['I','am','happy']])
+    object_1 =  Index(doc_tokens=[['I','am','happy']])
     print(object_1.get_index())
